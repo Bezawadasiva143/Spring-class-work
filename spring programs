@@ -1,0 +1,529 @@
+****************************App********************
+package com.wipro.app;
+
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.AbstractApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+
+import com.wipro.model.Employee;
+
+public class App {
+
+
+	public static void main(String[] args) {
+		ApplicationContext context=null;
+		try {
+			//IoC container 			
+			context= new ClassPathXmlApplicationContext("spring1.xml");
+			
+         Employee employee1 = (Employee) context.getBean("empBean1");
+       System.out.println(employee1);
+       
+   	
+       Employee employee2 = (Employee) context.getBean("empBean2");
+     System.out.println(employee2);
+       
+			
+			
+			 //shutdown IoC 
+			((AbstractApplicationContext)context).registerShutdownHook();
+		}catch(Exception e) {
+			e.printStackTrace();
+		}finally {
+			((AbstractApplicationContext)context).close();
+		}
+
+
+	}
+
+
+}
+
+*******************App1**************
+package com.wipro.app;
+
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.AbstractApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+import com.wipro.model.Person;
+public class App1 {
+	public static void main(String[] args) {
+		ApplicationContext context=null;
+		try {
+			//IoC container 			
+			context= new ClassPathXmlApplicationContext("sprin2.xml");
+			
+			Person person = (Person) context.getBean("personBean");
+			System.out.println(person);
+			
+			
+			 //shutdown IoC
+			((AbstractApplicationContext)context).registerShutdownHook();
+		}catch(Exception e) {
+			e.printStackTrace();
+		}finally {
+			((AbstractApplicationContext)context).close();
+		}
+	}
+}
+
+************App2**************
+package com.wipro.app;
+
+
+
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.AbstractApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+import com.wipro.model.Person;
+public class App2 {
+	public static void main(String[] args) {
+		ApplicationContext context=null;
+		try {
+			//IoC container 			
+			//context= new ClassPathXmlApplicationContext("spring3.xml");
+			
+			context= new ClassPathXmlApplicationContext("spring4.xml");
+			
+			Person person = (Person) context.getBean("personBean");
+			System.out.println(person);
+			
+			
+			 //shutdown IoC
+			((AbstractApplicationContext)context).registerShutdownHook();
+		}catch(Exception e) {
+			e.printStackTrace();
+		}finally {
+			((AbstractApplicationContext)context).close();
+		}
+	}
+}
+
+
+*******App3*********
+
+package com.wipro.app;
+
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import org.springframework.context.support.AbstractApplicationContext;
+import com.wipro.config.SpringConfiguration;
+import com.wipro.model.Person;
+public class App3 {
+	public static void main(String[] args) {
+		ApplicationContext context=null;
+		try {
+			//IoC container 			
+			context= new AnnotationConfigApplicationContext(SpringConfiguration.class);
+			
+			Person person = (Person) context.getBean("personBean");
+			System.out.println(person);
+			
+			
+			 //shutdown IoC
+			((AbstractApplicationContext)context).registerShutdownHook();
+		}catch(Exception e) {
+			e.printStackTrace();
+		}finally {
+			((AbstractApplicationContext)context).close();
+		}
+	}
+}
+
+
+
+********Address***************************
+package com.wipro.model;
+
+public class Address {
+	private String doorNumber;
+	private String street;
+	private String locality;
+	private String city;
+	private Long pincode;
+	
+	
+	public Address() {
+		
+	}
+	public Address(String doorNumber, String street, String locality, String city, Long pincode) {
+		super();
+		this.doorNumber = doorNumber;
+		this.street = street;
+		this.locality = locality;
+		this.city = city;
+		this.pincode = pincode;
+	}
+	public String getDoorNumber() {
+		return doorNumber;
+	}
+	public void setDoorNumber(String doorNumber) {
+		this.doorNumber = doorNumber;
+	}
+	public String getStreet() {
+		return street;
+	}
+	public void setStreet(String street) {
+		this.street = street;
+	}
+	public String getLocality() {
+		return locality;
+	}
+	public void setLocality(String locality) {
+		this.locality = locality;
+	}
+	public String getCity() {
+		return city;
+	}
+	public void setCity(String city) {
+		this.city = city;
+	}
+	public Long getPincode() {
+		return pincode;
+	}
+	public void setPincode(Long pincode) {
+		this.pincode = pincode;
+	}
+	
+	
+
+
+	public String toString() {
+		return "Address [doornumber=" + doorNumber + ", street=" + street + ", locality=" + locality + ", city=" + city
+				+ ", pincode=" + pincode + "]";
+	}
+	
+	
+
+}
+
+*******employee*****************
+package com.wipro.model;
+
+import java.time.LocalDate;
+
+public class Employee {
+	
+	private Integer emno;
+	private String ename;
+	private LocalDate hiredate;
+	private String job ;
+	private Double  sal;
+	private Integer deptno;
+	
+	public Employee() {
+		super();
+	}
+	
+	public Employee(Integer emno, String ename, LocalDate hiredate, String job, Double sal, Integer deptno) {
+		super();
+		this.emno = emno;
+		this.ename = ename;
+		this.hiredate = hiredate;
+		this.job = job;
+		this.sal = sal;
+		this.deptno = deptno;
+	}
+	public Employee(Integer emno, String ename, String  hiredate, String job, Double sal, Integer deptno) {
+		super();
+		this.emno = emno;
+		this.ename = ename;
+		this.hiredate = LocalDate.parse(hiredate);
+		this.job = job;
+		this.sal = sal;
+		this.deptno = deptno;
+	}
+	public Integer getEmno() {
+		return emno;
+	}
+	
+	public void setEmno(Integer emno) {
+		this.emno = emno;
+	}
+	public String getEname() {
+		return ename;
+	}
+	public void setEname(String ename) {
+		this.ename = ename;
+	}
+	public LocalDate getHiredate() {
+		return hiredate;
+	}
+	public void setHiredate(LocalDate hiredate) {
+		this.hiredate = hiredate;
+	}
+	
+	public void setCustomHiredate(String hiredate) {
+		this.hiredate = LocalDate.parse(hiredate);
+	}
+	public String getJob() {
+		return job;
+	}
+	public void setJob(String job) {
+		this.job = job;
+	}
+	public Double getSal() {
+		return sal;
+	}
+	public void setSal(Double sal) {
+		this.sal = sal;
+	}
+	public Integer getDeptno() {
+		return deptno;
+	}
+	public void setDeptno(Integer deptno) {
+		this.deptno = deptno;
+	}
+	@Override
+	public String toString() {
+		return "Employee [emno=" + emno + ", ename=" + ename + ", hiredate=" + hiredate + ", job=" + job + ", sal="
+				+ sal + ", deptno=" + deptno + "]";
+	}
+	
+
+}
+
+***************Person**************
+package com.wipro.model;
+
+import java.time.LocalDate;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+public class Person {
+	private Long adharCard;
+	private String name;
+	private LocalDate birthdate;
+	
+	//The @Autowired is byType   by default
+//	@Autowired
+//	private Address temporaryAddress;
+//	@Autowired
+//	private Address permanentAddress;
+	
+	
+	// The @Autowired changed to byName
+	@Autowired(required = false)
+	@Qualifier(value = "addressBean1")
+	private Address temporaryAddress;
+	@Autowired(required = false)
+	@Qualifier(value = "addressBean2")
+	private Address permanentAddress;
+	
+	
+	public Person() {
+		
+	}
+	public Person(Long adharCard, String name, LocalDate birthdate, Address temporaryAddress,
+			Address permanentAddress) {
+		super();
+		this.adharCard = adharCard;
+		this.name = name;
+		this.birthdate = birthdate;
+		this.temporaryAddress = temporaryAddress;
+		this.permanentAddress = permanentAddress;
+	}
+	
+	
+	public Person(Long adharCard, String name, String birthdate, Address temporaryAddress,
+			Address permanentAddress) {
+		super();
+		this.adharCard = adharCard;
+		this.name = name;
+		this.birthdate = LocalDate.parse(birthdate);
+		this.temporaryAddress = temporaryAddress;
+		this.permanentAddress = permanentAddress;
+	}
+	public Long getAdharCard() {
+		return adharCard;
+	}
+	public void setAdharCard(Long adharCard) {
+		this.adharCard = adharCard;
+	}
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
+	}
+	public LocalDate getBirthdate() {
+		return birthdate;
+	}
+	public void setBirthdate(LocalDate birthdate) {
+		this.birthdate = birthdate;
+	}
+	public void setCustomBirthdate(String birthdate) {
+		this.birthdate = LocalDate.parse(birthdate);
+	}
+	public Address getTemporaryAddress() {
+		return temporaryAddress;
+	}
+	public void setTemporaryAddress(Address temporaryAddress) {
+		this.temporaryAddress = temporaryAddress;
+	}
+	public Address getPermanentAddress() {
+		return permanentAddress;
+	}
+	public void setPermanentAddress(Address permanentAddress) {
+		this.permanentAddress = permanentAddress;
+	}
+	@Override
+	public String toString() {
+		return "Person [adharCard=" + adharCard + ", name=" + name + ", birthdate=" + birthdate + ", temporaryAddress="
+				+ temporaryAddress + ", permanentAddress=" + permanentAddress + "]";
+	}
+	
+	
+	
+	
+}
+
+*************Spring1***********
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+
+    xmlns:context="http://www.springframework.org/schema/context" xsi:schemaLocation="
+
+        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+
+        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd"> <!-- bean definitions here -->
+
+
+        <bean  id="empBean1" class="com.wipro.model.Employee" > 
+         <constructor-arg name="emno" value="1001" />
+          <constructor-arg name="ename" value="siva" />
+           <constructor-arg name="hiredate" value="2002-08-23" />
+            <constructor-arg name="job" value="java developer" />
+             <constructor-arg name="sal" value="899009.0" />
+              <constructor-arg name="deptno" value="10" />
+         
+        
+        
+        
+        </bean>
+        
+        
+        <bean id="empBean2" class="com.wipro.model.Employee" >
+            <property name="emno" value="1002 " />
+            <property name="ename" value="Mounika " />
+            <property name="customHiredate" value="2002-04-27" />
+            <property name="job" value="full stack java developer" />
+            <property name="sal" value="100000.0 " />
+            <property name="deptno" value="20 " />
+        
+        
+        </bean>
+
+
+</beans>
+
+
+*******spring2***************
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+   xmlns:context="http://www.springframework.org/schema/context" xsi:schemaLocation="
+       http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd"> <!-- bean definitions here -->
+	<bean id="temporaryAddress" class="com.wipro.model.Address">
+		<constructor-arg name="doorNumber" value="3-4-356"/>
+		<constructor-arg name="street" value="MG Street"/>
+		<constructor-arg name="locality" value="Abids"/>
+		<constructor-arg name="city" value="Hyderabad"/>
+		<constructor-arg name="pincode" value="500001"/>
+	</bean>
+	
+	<bean id="permanentAddress" class="com.wipro.model.Address">
+		<property name="doorNumber" value="8-6-112"/>
+		<property name="street" value="Kings Street"/>
+		<property name="locality" value="Bandra"/>
+		<property name="city" value="Mumbai"/>
+		<property name="pincode" value="400001"/>
+	</bean>
+	
+	<!--  Inject the above address beans into person bean, use ref attribute -->
+	
+	<bean id="personBean" class="com.wipro.model.Person" autowire="byName">
+		<property name="adharCard" value="988612548769"/>
+		<property name="name" value="Mounika Reddy"/>
+		<property name="customBirthdate" value="1990-10-15"/>
+		<!-- <property name="temporaryAddress" ref="addressBean1" />
+		<property name="permanentAddress" ref="addressBean2" /> -->
+	</bean>
+	
+</beans>
+
+****************spring3************
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:context="http://www.springframework.org/schema/context" xsi:schemaLocation="
+        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd"> <!-- bean definitions here -->
+<bean id="addressBean" class="com.wipro.model.Address">
+		<constructor-arg name="doorNumber" value="3-4-356"/>
+		<constructor-arg name="street" value="MG Street"/>
+		<constructor-arg name="locality" value="Abids"/>
+		<constructor-arg name="city" value="Hyderabad"/>
+		<constructor-arg name="pincode" value="500001"/>
+	</bean>
+	
+	<!-- <bean id="permanentAddress" class="com.wipro.model.Address">
+		<property name="doorNumber" value="8-6-112"/>
+		<property name="street" value="Kings Street"/>
+		<property name="locality" value="Bandra"/>
+		<property name="city" value="Mumbai"/>
+		<property name="pincode" value="400001"/>
+	</bean> -->
+	
+	<!--  Inject the above address beans into person bean, use ref attribute -->
+        <bean id="personBean" class="com.wipro.model.Person" autowire="byType">
+		<property name="adharCard" value="988612548769"/>
+		<property name="name" value="Mounika Reddy"/>
+		<property name="customBirthdate" value="1990-10-15"/>
+		<!-- <property name="temporaryAddress" ref="addressBean1" />
+		<property name="permanentAddress" ref="addressBean2" /> -->
+	</bean>
+	
+</beans>
+
+
+**************spring4*******
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+   xmlns:context="http://www.springframework.org/schema/context" xsi:schemaLocation="
+       http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd"> <!-- bean definitions here -->
+	<context:annotation-config/>
+	
+	<bean id="addressBean1" class="com.wipro.model.Address">
+		<constructor-arg name="doorNumber" value="3-4-356"/>
+		<constructor-arg name="street" value="MG Street"/>
+		<constructor-arg name="locality" value="Abids"/>
+		<constructor-arg name="city" value="Hyderabad"/>
+		<constructor-arg name="pincode" value="500001"/>
+	</bean>
+	
+	<!-- <bean id="addressBean2" class="com.wipro.model.Address">
+		<property name="doorNumber" value="8-6-112"/>
+		<property name="street" value="Kings Street"/>
+		<property name="locality" value="Bandra"/>
+		<property name="city" value="Mumbai"/>
+		<property name="pincode" value="400001"/>
+	</bean>  -->
+	
+	<!--  Inject the above address beans into person bean, use ref attribute -->
+	
+	<bean id="personBean" class="com.wipro.model.Person">
+		<property name="adharCard" value="988612548769"/>
+		<property name="name" value="Mounika Reddy"/>
+		<property name="customBirthdate" value="1990-10-15"/>
+		
+	</bean>
+	
+</beans>
+
+
